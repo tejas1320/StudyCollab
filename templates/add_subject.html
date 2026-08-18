@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Subject
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-7">
+
+        <div class="card shadow">
+
+            <div class="card-body p-4">
+
+                <h2 class="mb-4">
+                    ➕ Add New Subject
+                </h2>
+
+
+                <form
+                    method="POST"
+                    action="/subjects/add"
+                >
+
+                    <!-- Subject Name -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Subject Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="subject_name"
+                            class="form-control"
+                            placeholder="Example: DBMS"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Difficulty -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Difficulty
+                        </label>
+
+                        <select
+                            name="difficulty"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="1">
+                                1 - Very Easy
+                            </option>
+
+                            <option value="2">
+                                2 - Easy
+                            </option>
+
+                            <option
+                                value="3"
+                                selected
+                            >
+                                3 - Moderate
+                            </option>
+
+                            <option value="4">
+                                4 - Difficult
+                            </option>
+
+                            <option value="5">
+                                5 - Very Difficult
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Preparation -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Current Preparation
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="number"
+                                name="preparation"
+                                class="form-control"
+                                min="0"
+                                max="100"
+                                value="0"
+                                required
+                            >
+
+                            <span class="input-group-text">
+                                %
+                            </span>
+
+                        </div>
+
+                        <small class="text-muted">
+                            Enter your estimated preparation
+                            from 0% to 100%.
+                        </small>
+
+                    </div>
+
+
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Add Subject
+                        </button>
+
+                        <a
+                            href="/subjects"
+                            class="btn btn-secondary"
+                        >
+                            Cancel
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

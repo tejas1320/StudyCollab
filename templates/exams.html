@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Exams
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+            📅 My Exams
+        </h2>
+
+        <p class="text-muted">
+            Track your upcoming examinations and deadlines.
+        </p>
+
+    </div>
+
+    <a
+        href="/exams/add"
+        class="btn btn-primary"
+    >
+        + Add Exam
+    </a>
+
+</div>
+
+
+{% if exams %}
+
+<div class="row g-4">
+
+    {% for exam in exams %}
+
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow h-100">
+
+            <div class="card-body">
+
+                <span class="badge bg-primary mb-2">
+                    {{ exam.subject_name }}
+                </span>
+
+                <h4>
+                    {{ exam.exam_name }}
+                </h4>
+
+                <hr>
+
+                <p>
+                    <strong>Exam Date:</strong><br>
+                    {{ exam.exam_date }}
+                </p>
+
+                <p>
+                    <strong>Total Marks:</strong>
+                    {{ exam.total_marks }}
+                </p>
+
+
+                <div
+                    class="alert alert-info"
+                    data-exam-date="{{ exam.exam_date }}"
+                >
+                    <strong>
+                        <span class="days-remaining">
+                            Calculating...
+                        </span>
+                    </strong>
+                </div>
+
+
+                <form
+                    method="POST"
+                    action="/exams/delete/{{ exam.exam_id }}"
+                    onsubmit="return confirm('Are you sure you want to delete this exam?');"
+                >
+
+                    <button
+                        type="submit"
+                        class="btn btn-outline-danger btn-sm"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="card shadow">
+
+    <div class="card-body text-center py-5">
+
+        <h3>
+            📝 No Exams Added
+        </h3>
+
+        <p class="text-muted">
+            Add your upcoming exams so the AI can calculate
+            your study priorities.
+        </p>
+
+        <a
+            href="/exams/add"
+            class="btn btn-primary"
+        >
+            Add Your First Exam
+        </a>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<div class="mt-4">
+
+    <a
+        href="/dashboard"
+        class="btn btn-secondary"
+    >
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+{% endblock %}

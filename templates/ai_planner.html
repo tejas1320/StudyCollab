@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+
+{% block title %}
+AI Study Planner
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+
+        <h2>
+            🤖 AI Study Planner
+        </h2>
+
+        <p class="text-muted">
+            Your study priorities are calculated using
+            subject difficulty, preparation level and
+            upcoming exams.
+        </p>
+
+    </div>
+
+
+    {% if recommendations %}
+	<!-- ========================================= -->
+<!-- TODAY'S AI STUDY PLAN -->
+<!-- ========================================= -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between
+                    align-items-center">
+
+            <div>
+
+                <h3>
+                    📅 Today's AI Study Plan
+                </h3>
+
+                <p class="text-muted mb-0">
+                    Your study schedule is automatically
+                    generated according to your priorities.
+                </p>
+
+            </div>
+
+            <div class="text-end">
+
+                <strong>
+                    {{ total_minutes }} minutes
+                </strong>
+
+                <br>
+
+                <small class="text-muted">
+                    recommended today
+                </small>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+
+        {% if daily_plan %}
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Subject
+                        </th>
+
+                        <th>
+                            Duration
+                        </th>
+
+                        <th>
+                            AI Priority
+                        </th>
+
+                        <th>
+                            Focus
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in daily_plan %}
+
+                    <tr>
+
+                        <td>
+
+                            <strong>
+                                {{ item.time }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+                                {{ item.subject }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge bg-primary">
+
+                                {{ item.minutes }}
+                                min
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.priority >= 75 %}
+
+                            <span class="badge bg-danger">
+
+                                {{ item.priority }}
+
+                            </span>
+
+                            {% elif item.priority >= 50 %}
+
+                            <span class="badge bg-warning text-dark">
+
+                                {{ item.priority }}
+
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge bg-success">
+
+                                {{ item.priority }}
+
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.focus }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-info">
+
+            Add subjects to generate your daily
+            AI study schedule.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+    <div class="row g-4">
+
+        {% for item in recommendations %}
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center mb-3">
+
+                        <h4>
+                            {{ item.subject }}
+                        </h4>
+
+
+                        {% if item.priority >= 75 %}
+
+                        <span class="badge bg-danger">
+                            High
+
+                        {% elif item.priority >= 50 %}
+
+                        <span class="badge bg-warning text-dark">
+                            Medium
+
+                        {% else %}
+
+                        <span class="badge bg-success">
+                            Low
+
+                        {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <p>
+
+                        <strong>
+                            AI Priority:
+                        </strong>
+
+                        {{ item.priority }}/100
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Difficulty:
+                        </strong>
+
+                        {{ item.difficulty }}/5
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Preparation:
+                        </strong>
+
+                        {{ item.preparation }}%
+
+                    </p>
+
+
+                    {% if item.days_until_exam < 90 %}
+
+                    <p>
+
+                        <strong>
+                            Exam:
+                        </strong>
+
+                        {{ item.days_until_exam }}
+                        days remaining
+
+                    </p>
+
+                    {% else %}
+
+                    <p>
+
+                        <strong>
+                            Exam:
+                        </strong>
+
+                        No upcoming exam
+
+                    </p>
+
+                    {% endif %}
+
+
+                    <div class="alert alert-info mt-3">
+
+                        🤖
+
+                        <strong>
+                            {{ item.recommendation }}
+                        </strong>
+
+                        <br>
+
+                        {% if item.priority >= 75 %}
+
+                        Focus on this subject first.
+                        Your exam is approaching or
+                        your preparation is low.
+
+                        {% elif item.priority >= 50 %}
+
+                        Give this subject regular study
+                        time and revise weak areas.
+
+                        {% else %}
+
+                        Maintain regular revision for
+                        this subject.
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <div class="card shadow">
+
+        <div class="card-body text-center py-5">
+
+            <h3>
+                📚 No Subjects Found
+            </h3>
+
+            <p class="text-muted">
+                Add subjects and exams to generate
+                your AI study plan.
+            </p>
+
+            <a
+                href="/subjects/add"
+                class="btn btn-primary"
+            >
+                Add Subject
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <div class="mt-4">
+
+        <a
+            href="/dashboard"
+            class="btn btn-secondary"
+        >
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

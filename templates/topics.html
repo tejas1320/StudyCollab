@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ subject.subject_name }} Topics
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+            📚 {{ subject.subject_name }} Topics
+        </h2>
+
+        <p class="text-muted">
+            Track your topic-wise preparation.
+        </p>
+
+    </div>
+
+    <a
+        href="/subjects/{{ subject.subject_id }}/topics/add"
+        class="btn btn-primary"
+    >
+        + Add Topic
+    </a>
+
+</div>
+
+
+{% if topics %}
+
+<div class="row g-4">
+
+    {% for topic in topics %}
+
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow h-100">
+
+            <div class="card-body">
+
+                <h4>
+                    {{ topic.topic_name }}
+                </h4>
+
+
+                <div class="mt-3">
+
+                    <strong>
+                        Difficulty
+                    </strong>
+
+                    <span class="float-end">
+                        {{ topic.difficulty }}/5
+                    </span>
+
+                    <div class="progress mt-2">
+
+                        <div
+                            class="progress-bar"
+                            style="width: {{ topic.difficulty * 20 }}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <strong>
+                        Completion
+                    </strong>
+
+                    <span class="float-end">
+                        {{ topic.completion_percentage }}%
+                    </span>
+
+                    <div class="progress mt-2">
+
+                        <div
+                            class="progress-bar bg-success"
+                            style="width: {{ topic.completion_percentage }}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <form
+                        method="POST"
+                        action="/topics/delete/{{ topic.topic_id }}"
+                        onsubmit="return confirm('Delete this topic?');"
+                    >
+
+                        <button
+                            type="submit"
+                            class="btn btn-outline-danger btn-sm"
+                        >
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="card shadow">
+
+    <div class="card-body text-center py-5">
+
+        <h3>
+            📖 No Topics Yet
+        </h3>
+
+        <p class="text-muted">
+            Add topics to track your preparation
+            more accurately.
+        </p>
+
+        <a
+            href="/subjects/{{ subject.subject_id }}/topics/add"
+            class="btn btn-primary"
+        >
+            Add First Topic
+        </a>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<div class="mt-4">
+
+    <a
+        href="/subjects"
+        class="btn btn-secondary"
+    >
+        ← Back to Subjects
+    </a>
+
+</div>
+
+{% endblock %}

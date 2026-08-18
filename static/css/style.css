@@ -1,0 +1,29 @@
+body {
+    background: #f5f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.dashboard-card {
+    transition: 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.btn {
+    border-radius: 10px;
+}
